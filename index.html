@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>معايدة عيد الفطر 2025</title>
+  <!-- ربط ملف التنسيق -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>إنشاء معايدة عيد الفطر 2025</h1>
+  <!-- نص إضافي للمستخدم -->
+  <p class="instruction">اختر القالب المناسب</p>
+  
+  <!-- قسم اختيار القالب -->
+  <div id="template-selection">
+    <img src="images/3.png" alt="قالب 1" class="template-option" onclick="selectTemplate('images/3.png')">
+    <img src="images/5.png" alt="قالب 2" class="template-option" onclick="selectTemplate('images/5.png')">
+    <img src="images/7.png" alt="قالب 3" class="template-option" onclick="selectTemplate('images/7.png')">
+    <!-- يمكنك إضافة المزيد من الصور هنا -->
+  </div>
+  
+  <!-- قسم التعديل على المعايدة -->
+  <div id="editor">
+    <div class="template-container" id="canvas-container">
+      <img id="template-image" src="" alt="القالب">
+      
+      <!-- عنصر النص القابل للتحرير مع تلميح للسحب -->
+      <div id="text-element" class="draggable text-draggable" contenteditable="true" style="top:50px; left:50px; font-size:24px; color:#000;">
+        أدخل اسمك هنا
+      </div>
+      <!-- تم تحديث النص ولونه إلى الأحمر -->
+      <span class="mobile-hint">يمكنك سحب النص أو الصورة لوضعه في المكان المناسب</span>
+      
+      <!-- عنصر دائري لاحتواء الصورة المرفوعة -->
+      <div id="image-crop-container" class="circular-container" style="display:none; top:100px; left:100px;">
+        <img id="user-image-inner" src="" alt="صورة المستخدم" class="user-image-inner">
+      </div>
+    </div>
+    
+    <div class="controls">
+      <div class="control-group">
+        <label>أدخل النص:</label>
+        <input type="text" id="user-text" placeholder="أدخل اسمك أو نص المعايدة">
+        <button onclick="updateText()">تطبيق</button>
+      </div>
+      
+      <div class="control-group">
+        <label>حجم الخط:</label>
+        <input type="range" id="font-size" min="16" max="72" value="24" onchange="updateFontSize(this.value)">
+      </div>
+      
+      <div class="control-group">
+        <label>لون الخط:</label>
+        <input type="color" id="font-color" value="#000000" onchange="updateFontColor(this.value)">
+      </div>
+      
+      <div class="control-group">
+        <label>نوع الخط:</label>
+        <select id="font-type" onchange="updateFontType(this.value)">
+          <!-- الخطوط الأساسية -->
+          <option value="Arial">Arial</option>
+          <option value="Tahoma">Tahoma</option>
+          <option value="Times New Roman">Times New Roman</option>
+          <option value="'Amiri', serif">أميري</option>
+          <option value="'Cairo', sans-serif">Cairo</option>
+          <option value="'Ruqaa', sans-serif">الرقعة</option>
+          <option value="'Diwan', serif">خط الديوان</option>
+          <option value="'Traditional Arabic', serif">الخط التقليدي</option>
+          <!-- الخطوط المخصصة المُعرّفة -->
+          <option value="SadokartBold">SadokartBold</option>
+          <option value="AbdoFree">AbdoFree</option>
+          <option value="ALMohanadBold">ALMohanadBold</option>
+          <option value="AlsamtDiwani">AlsamtDiwani</option>
+          <option value="AlSharkTitleLight">AlSharkTitleLight</option>
+          <option value="ArefRuqaaBold">ArefRuqaaBold</option>
+          <option value="ArefRuqaaRegular">ArefRuqaaRegular</option>
+          <option value="BArshia">BArshia</option>
+          <option value="DiwanyEdited">DiwanyEdited</option>
+          <option value="HSNLayan">HSNLayan</option>
+          <option value="KhalaadAlArabeh">KhalaadAlArabeh</option>
+          <option value="Mohareb">Mohareb</option>
+          <option value="Rakkas">Rakkas</option>
+          <option value="ReemKufiVariable">ReemKufiVariable</option>
+          <option value="SKRHEAD2Outlined">SKRHEAD2Outlined</option>
+          <option value="SultanFree">SultanFree</option>
+        </select>
+      </div>
+      
+      <div class="control-group">
+        <label>رفع صورة (اختياري):</label>
+        <input type="file" id="image-upload" accept="image/*" onchange="uploadUserImage(event)">
+      </div>
+      
+      <!-- تحكم تكبير/تصغير الصورة مع الإطار -->
+      <div class="control-group">
+        <label>تكبير الصورة:</label>
+        <input type="range" id="image-zoom" min="0.5" max="2" step="0.1" value="1" onchange="updateImageZoom(this.value)">
+      </div>
+      
+      <!-- زر "تم" لتأكيد موضع الصورة يظهر تحت تحكم التكبير -->
+      <div class="control-group" id="confirm-image-group" style="display:none;">
+        <button onclick="confirmImagePosition()">تم</button>
+      </div>
+      
+      <div class="control-group buttons-group">
+        <button onclick="downloadImage()">تحميل المعايدة</button>
+        <button onclick="shareImage()">مشاركة المعايدة</button>
+        <!-- زر العودة للصفحة الرئيسية -->
+        <button onclick="goHome()">الصفحة الرئيسية</button>
+      </div>
+      
+    
+    </div>
+  </div>
+  
+ <!-- قسم أسفل الصفحة -->
+<footer id="footer-section">
+  <p>هذا البرنامج تم إنشاؤه بواسطة</p>
+  <img src="images/amir_log.png" alt="شعار" class="footer-logo">
+
+  <!-- رابط أيقونة X (تويتر سابقاً) -->
+  <p>
+    <a href="https://twitter.com/aamirtechnic" target="_blank">
+      <img src="images/x-logo.png" alt="X (Twitter)" style="width:30px; height:30px;">
+    </a>
+  </p>
+
+  <p>استمتعوا بالعيد <span class="candy-emoji">🍬</span></p>
+</footer>
+
+  
+  <!-- ربط ملف الجافاسكريبت -->
+  <script src="script.js"></script>
+  <!-- تضمين مكتبة html2canvas لالتقاط المحتوى كصورة -->
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+</body>
+</html>
