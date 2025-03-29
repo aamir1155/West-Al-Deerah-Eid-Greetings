@@ -239,6 +239,4 @@ function shareImage() {
     });
   });
 
-});
-
 }
