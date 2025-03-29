@@ -137,29 +137,45 @@ function uploadUserImage(event) {
 
 function confirmImagePosition() {
   const container = document.getElementById("image-crop-container");
-  html2canvas(container, {
+const innerImage = document.getElementById("user-image-inner");
+const rect = container.getBoundingClientRect();
+
+html2canvas(container, {
   backgroundColor: null,
-  scale: 2,  
+  scale: 2,
   useCORS: true,
   allowTaint: true
 }).then(canvas => {
+  const size = Math.min(rect.width, rect.height) * 2; 
+  const circCanvas = document.createElement('canvas');
+  circCanvas.width = size;
+  circCanvas.height = size;
 
-    const ctx = canvas.getContext('2d');
-    const size = canvas.width;
-    ctx.globalCompositeOperation = 'destination-in';
-    ctx.beginPath();
-    ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
-    ctx.closePath();
-    ctx.fill();
+  const ctx = circCanvas.getContext('2d');
 
-    const dataURL = canvas.toDataURL();
-    document.getElementById("user-image-inner").src = dataURL;
-    imageConfirmed = true;
-    document.getElementById("confirm-image-group").style.display = "none";
-    container.style.border = "none";
-    document.getElementById("user-image-inner").style.pointerEvents = "none";
-    makeDraggable(container);
-  });
+  ctx.beginPath();
+  ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2, true);
+  ctx.closePath();
+  ctx.clip();
+
+  ctx.drawImage(
+    canvas,
+    0, 0, canvas.width, canvas.height,
+    0, 0, size, size
+  );
+
+  const dataURL = circCanvas.toDataURL();
+  innerImage.src = dataURL;
+
+  imageConfirmed = true;
+  document.getElementById("confirm-image-group").style.display = "none";
+  container.style.border = "none";
+  innerImage.style.transform = "none";
+  innerImage.style.pointerEvents = "none";
+
+  makeDraggable(container);
+});
+
 }
 
 function downloadImage() {
