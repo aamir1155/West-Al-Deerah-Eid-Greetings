@@ -135,66 +135,65 @@
   <script src="script.js"></script>
   <!-- تضمين مكتبة html2canvas لالتقاط المحتوى كصورة -->
   <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-
-  <!-- أيقونة تعليمات الاستخدام -->
-<button id="help-btn" style="position: fixed; left: 10px; bottom: 10px; padding: 10px 15px; border-radius: 50%; background-color: #007BFF; color: white; border: none; cursor: pointer;">
+<!-- زر تعليمات الاستخدام -->
+<button id="help-btn" style="position: fixed; bottom: 10px; left: 10px; padding: 10px 15px; border-radius: 8px; background-color: #007BFF; color: white; border: none; cursor: pointer; z-index: 10000;">
   تعليمات الاستخدام
 </button>
 
-<!-- نافذة تعليمات الاستخدام -->
+<!-- نافذة التعليمات -->
 <div id="help-modal" style="
-  display:none;
-  position: fixed; 
-  left: 0; 
-  top: 0; 
-  width: 100%; 
-  height: 100%; 
-  background-color: rgba(0,0,0,0.8); 
-  justify-content: center; 
+  display: none;
+  position: fixed;
+  top: 0; left: 0; 
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  z-index: 9999;
+  justify-content: center;
   align-items: center;
-  z-index: 9999;">
-  
+  text-align: right;
+  direction: rtl;
+">
+
   <div style="
-    background-color: white; 
-    padding: 20px; 
-    border-radius: 10px; 
-    max-width: 500px; 
-    width: 90%; 
-    text-align: right;">
-    
-    <h2 style="margin-top:0; color:#333;">تعليمات الاستخدام</h2>
-    <ul style="text-align: right; line-height: 1.6; color: #444;">
-      <li><strong>اختيار القالب:</strong> اختر أحد القوالب الظاهرة أمامك لبدء التصميم.</li>
-      <li><strong>كتابة الاسم:</strong> اكتب الاسم أو النص، ثم اضغط "تطبيق"، واسحب النص إلى المكان المناسب.</li>
-      <li><strong>اختيار وإضافة صورة:</strong> اختر صورة من جهازك، وحركها داخل الإطار الدائري، ثم اضغط "تم".</li>
-      <li><strong>تحريك وتكبير/تصغير الصورة بعد التثبيت:</strong> يمكنك تحريك الصورة والإطار وتغيير حجمها بحرية بعد التثبيت.</li>
-      <li><strong>تحميل ومشاركة المعايدة:</strong> استخدم أزرار التحميل والمشاركة بعد الانتهاء.</li>
-      <li><strong>زر الصفحة الرئيسية:</strong> للبدء بتصميم جديد من البداية.</li>
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 500px;
+    width: 90%;
+    color: #333;
+  ">
+    <h2>تعليمات الاستخدام</h2>
+    <ul>
+      <li>اختر أحد القوالب الظاهرة للبدء.</li>
+      <li>أدخل الاسم، ثم حرّكه إلى المكان المناسب داخل القالب.</li>
+      <li>يمكنك رفع صورة من جهازك، وتحريكها داخل الإطار.</li>
+      <li>بعد الضغط على "تم"، يمكنك تحريك الإطار بالكامل وتكبيره أو تصغيره.</li>
+      <li>اضغط على "تحميل المعايدة" لتنزيل التصميم، أو "مشاركة المعايدة" لمشاركته.</li>
+      <li>اضغط "الصفحة الرئيسية" للبدء من جديد.</li>
     </ul>
 
-    <button id="close-help-btn" style="
-      margin-top:15px; 
-      background-color: #dc3545; 
-      color: white; 
-      border: none; 
-      padding: 8px 15px; 
-      border-radius: 5px; 
-      cursor: pointer;">
+    <button id="close-help-btn" style="margin-top: 10px; background-color: #dc3545; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;">
       إغلاق
     </button>
-
   </div>
 </div>
-  <script>
-document.getElementById('help-btn').onclick = function() {
-  document.getElementById('help-modal').style.display = 'flex';
-};
 
-document.getElementById('close-help-btn').onclick = function() {
-  document.getElementById('help-modal').style.display = 'none';
-};
+<!-- سكربت التفاعل مع الزر -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const helpBtn = document.getElementById("help-btn");
+    const helpModal = document.getElementById("help-modal");
+    const closeBtn = document.getElementById("close-help-btn");
+
+    helpBtn.addEventListener("click", function () {
+      helpModal.style.display = "flex";
+    });
+
+    closeBtn.addEventListener("click", function () {
+      helpModal.style.display = "none";
+    });
+  });
 </script>
-
 
 </body>
 </html>
