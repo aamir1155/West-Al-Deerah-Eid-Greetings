@@ -137,7 +137,13 @@ function uploadUserImage(event) {
 
 function confirmImagePosition() {
   const container = document.getElementById("image-crop-container");
-  html2canvas(container, { backgroundColor: null }).then(canvas => {
+  html2canvas(container, {
+  backgroundColor: null,
+  scale: 2,  
+  useCORS: true,
+  allowTaint: true
+}).then(canvas => {
+
     const ctx = canvas.getContext('2d');
     const size = canvas.width;
     ctx.globalCompositeOperation = 'destination-in';
