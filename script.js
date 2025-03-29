@@ -238,18 +238,6 @@ function shareImage() {
       document.querySelector(".mobile-hint").style.display = "block";
     });
   });
-// تفعيل زر تعليمات الاستخدام بعد تحميل الصفحة بالكامل
-document.addEventListener("DOMContentLoaded", function() {
-  
-  // فتح نافذة تعليمات الاستخدام
-  document.getElementById('help-btn').onclick = function() {
-    document.getElementById('help-modal').style.display = 'flex';
-  };
-
-  // إغلاق نافذة تعليمات الاستخدام
-  document.getElementById('close-help-btn').onclick = function() {
-    document.getElementById('help-modal').style.display = 'none';
-  };
 
 });
 
