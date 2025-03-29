@@ -185,15 +185,42 @@ html2canvas(container, {
 }
 
 function downloadImage() {
+  // إخفاء النص الإرشادي قبل التحميل
   document.querySelector(".mobile-hint").style.display = "none";
-  html2canvas(document.getElementById("canvas-container"), {backgroundColor: null}).then(canvas => {
+
+  const container = document.getElementById("canvas-container");
+
+  html2canvas(container, {
+    backgroundColor: null,
+    scale: 2,   // لتحسين الجودة
+    useCORS: true,
+    allowTaint: true
+  }).then(canvas => {
+    const ctx = canvas.getContext('2d');
+    
+    // إزالة الإطار الأبيض أو الشفاف
+    const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imgData.data;
+
+    // تنظيف البيكسلات البيضاء/الشفافة من الأطراف
+    for (let i = 0; i < data.length; i += 4) {
+      if (data[i + 3] < 255) { // بكسلات شفافة أو شبه شفافة
+        data[i + 3] = 0; // جعلها شفافة بالكامل
+      }
+    }
+    ctx.putImageData(imgData, 0, 0);
+
+    // تحميل الصورة
     let link = document.createElement("a");
     link.download = "معايدة_عيد_الفطر_2025.png";
     link.href = canvas.toDataURL("image/png");
     link.click();
+
+    // إعادة إظهار النص الإرشادي بعد التحميل
     document.querySelector(".mobile-hint").style.display = "block";
   });
 }
+
 
 function shareImage() {
   document.querySelector(".mobile-hint").style.display = "none";
