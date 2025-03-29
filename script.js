@@ -34,12 +34,18 @@ function updateFontType(font) {
 
 function updateImageZoom(zoomValue) {
   currentZoom = zoomValue;
-  const transform = `translate(${imageOffsetX}px, ${imageOffsetY}px) scale(${zoomValue})`;
-  document.getElementById("user-image-inner").style.transform = transform;
-  if (imageConfirmed) {
+
+  if (!imageConfirmed) {
+    // قبل التأكيد (قبل الضغط على تم) الصورة تتحرك وتكبر وتصغر
+    const transform = `translate(${imageOffsetX}px, ${imageOffsetY}px) scale(${zoomValue})`;
+    document.getElementById("user-image-inner").style.transform = transform;
+  } else {
+    // بعد التأكيد (بعد الضغط على تم) الإطار فقط يتغير حجمه والصورة ثابتة
     document.getElementById("image-crop-container").style.transform = `scale(${zoomValue})`;
+    document.getElementById("user-image-inner").style.transform = "none";
   }
 }
+
 
 function makeDraggable(el) {
   let isDragging = false, startX, startY;
